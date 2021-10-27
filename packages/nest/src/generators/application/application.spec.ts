@@ -62,4 +62,20 @@ describe('application generator', () => {
       expect(devkit.formatFiles).not.toHaveBeenCalled();
     });
   });
+
+  describe('--experimentalSwc', () => {
+    it('should generate swcrc file', async () => {
+      await applicationGenerator(tree, {
+        name: 'mySwcNestApp',
+        experimentalSwc: true,
+      });
+
+      expect(tree.exists('.swcrc')).toBeTruthy();
+
+      const workspaceJson = devkit.readJson(tree, 'workspace.json');
+      const project = workspaceJson.projects['my-swc-nest-app'];
+      const buildTarget = project.architect.build;
+      expect(buildTarget.options.experimentalSwc).toEqual(true);
+    });
+  });
 });
