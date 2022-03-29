@@ -47,7 +47,7 @@ export async function formatFiles(tree: Tree): Promise<void> {
         ...resolvedOptions,
       };
 
-      const support = await prettier.getFileInfo(systemPath);
+      const support = await prettier.getFileInfo(systemPath, options);
       if (support.ignored || !support.inferredParser) {
         return;
       }
